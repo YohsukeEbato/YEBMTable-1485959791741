@@ -1,13 +1,13 @@
 /*eslint-env browser, jquery*/
 // ui_table.js ブラウザUI用 JavaScript (index.htmlより呼ばれる)
 
- // サーバから取得したデータを、htmlテーブルに追加
- var showTable = function(data) {
+// サーバから取得したデータを、htmlテーブルに追加
+var showTable = function(data) {
 	$("#tableItems").append("<tr></tr>")
 		.find("tr:last")
 		.append("<td>" + data.date + "</td>")
 		.append("<td>" + data.item1 + "</td>");
- };
+};
 
 
 $(function(){
