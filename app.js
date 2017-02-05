@@ -21,6 +21,9 @@ app.use(express.static(__dirname + '/public'));
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
 
+// moment.jsの読み込み
+//var moment = require('moment', 'moment/locale/ja');
+var moment = require('moment-timezone');
 
 /***ここから追加***/
 // POSTパラメータ取得用 body-parser設定 (express4から必要)
@@ -29,21 +32,30 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Date()で現在時刻を取得するためのユーティリティ
-var dateutil = require('date-utils');
- 
-app.post('/', function(req, res){
- var date = new Date();
- var now = date.toFormat("YYYY/MM/DD HH24:MI:SS");
- req.body.date = now;
- 
- console.log('app.js req.body: ' + JSON.stringify(req.body));
- res.send(req.body);
+//var dateutil = require('date-utils');
+
+app.post('/', function(req, res) {
+	//var date = new Date();
+	//var now = date.toFormat("YYYY/MM/DD HH24:MI:SS");
+	
+	//var m = moment();
+	//m.locale('ja');
+	
+	//var m = moment();
+	//m.tz("Asia/Tokyo");
+	var m = moment().tz("Asia/Tokyo");
+	var now = m.format('YYYY年MM月DD日 HH:mm:ss dddd');
+
+	req.body.date = now;
+
+	console.log('app.js req.body: ' + JSON.stringify(req.body));
+	res.send(req.body);
 });
 /***ここまで追加***/
 
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
-  // print a message when the server starts listening
-  console.log("server starting on " + appEnv.url);
+	// print a message when the server starts listening
+	console.log("server starting on " + appEnv.url);
 });
